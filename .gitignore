@@ -1,0 +1,5 @@
+node-debug.log
+node_modules
+*.key
+*.crt
+*.pem

@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+try {
+  var server = require('..')()
+  console.log("[jspm-dev-server] starting https://localhost:3000")
+
+  server.listen(3000)
+} catch(error) {
+  if (error.code === 'ENOENT') {
+    console.warn(`You are missing TLS keys at ${error.path}`)
+    console.warn("Generate one like: openssl req -x509 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -days 30 -nodes -subj '/CN=localhost'")
+  } else {
+    throw error
+  }
+}
+

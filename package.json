@@ -1,0 +1,33 @@
+{
+  "name": "jspm-dev-server",
+  "version": "0.1.0",
+  "description": "HTTP/2 server for JSPM development.",
+  "main": "index.js",
+  "bin": {
+    "jspm-dev-server": "./bin/jspm-dev-server"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bin/jspm-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mikz/jspm-dev-server.git"
+  },
+  "keywords": [
+    "jspm",
+    "http2"
+  ],
+  "author": "Michal Cichra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mikz/jspm-dev-server/issues"
+  },
+  "homepage": "https://github.com/mikz/jspm-dev-server#readme",
+  "dependencies": {
+    "chokidar-socket-emitter": "^0.4.2",
+    "finalhandler": "^0.4.1",
+    "serve-static": "^1.10.2",
+    "spdy": "^3.2.0"
+  }
+}
