@@ -20,3 +20,12 @@ Then just open `https://localhost:3000` and you'll see your app running.
 - [ ] ability to control the middleware
 - [ ] configurable paths to certs
 - [ ] configurable port
+
+
+## Projects
+
+This project is using:
+
+* [node-spdy](https://github.com/indutny/node-spdy)
+* [chokidar-socket-emitter](https://github.com/capaj/chokidar-socket-emitter)
+* [serve-static](https://github.com/expressjs/serve-static)
