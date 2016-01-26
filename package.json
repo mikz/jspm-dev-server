@@ -1,6 +1,6 @@
 {
   "name": "jspm-dev-server",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "HTTP/2 server for JSPM development.",
   "main": "index.js",
   "bin": {
