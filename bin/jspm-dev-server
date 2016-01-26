@@ -16,6 +16,7 @@ options
   .option('-c, --cert <pem>', 'path to a PEM certificate. defaults to localhost.crt in current folder')
   .option('-k, --key <pem>', 'path to a PEM key. defaults to localhost.key in current folder')
   .option('-i, --ignore <path>', 'paths to ignore from file watching', collect, [/[\/\\]\./, 'node_modules/**', 'jspm_packages/**', /^\./])
+  .option('-l, --proxy <url>', 'url to forward the request if file is not found')
   .parse(process.argv);
 
 options.port = options.port || 3000
