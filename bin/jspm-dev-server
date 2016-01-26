@@ -1,10 +1,33 @@
 #!/usr/bin/env node
 
-try {
-  var server = require('..')()
-  console.log("[jspm-dev-server] starting https://localhost:3000")
 
-  server.listen(3000)
+var options = require('commander'),
+    path = require('path')
+
+function collect(val, memo) {
+  memo.push(val);
+  return memo;
+}
+
+options
+  .version('0.1.0')
+  .option('-p, --port <n>', 'port to listen on. defaults to 3000', parseInt)
+  .option('-d, --dir <folder>', 'directory to serve static files from')
+  .option('-c, --cert <pem>', 'path to a PEM certificate. defaults to localhost.crt in current folder')
+  .option('-k, --key <pem>', 'path to a PEM key. defaults to localhost.key in current folder')
+  .option('-i, --ignore <path>', 'paths to ignore from file watching', collect, [/[\/\\]\./, 'node_modules/**', 'jspm_packages/**', /^\./])
+  .parse(process.argv);
+
+options.port = options.port || 3000
+options.cert = path.resolve(options.cert || 'localhost.crt')
+options.key = path.resolve(options.key || 'localhost.key')
+options.dir = path.resolve(options.dir || process.cwd())
+options.chokidar = { ignored: options.ignore }
+
+try {
+  var server = require('..')(options)
+  console.log(`[jspm-dev-server] serving ${options.dir} on https://localhost:${options.port}`)
+  server.listen(options.port)
 } catch(error) {
   if (error.code === 'ENOENT') {
     console.warn(`You are missing TLS keys at ${error.path}`)
