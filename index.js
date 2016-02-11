@@ -68,9 +68,9 @@ module.exports = function(opts) {
   var server = spdy.createServer(options, function(req, res) {
     var done = finalhandler(req, res)
 
-    serve(req, res, function() {
+    serve(req, res, options.proxy ? function() {
       proxy.web(req, res, { target: options.proxy }, done)
-    });
+    } : done);
   });
 
   var chokidar = { app: server, dir: dir, chokidar: options.chokidar }
