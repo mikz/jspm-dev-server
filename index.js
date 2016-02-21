@@ -24,7 +24,7 @@ var serverOptions = function(opts) {
 // Serve up public/ftp folder
 var serveMiddleware = function(options) {
   return serveStatic(options.dir, {
-    fallthrough: !!options.proxy,
+    fallthrough: true,
     'index': ['index.html', 'index.htm'],
     'setHeaders': function(res, path, stat) {
       if (path.includes('/jspm_packages/')) {
@@ -56,14 +56,29 @@ module.exports = function(opts) {
       u.host = target.host
       proxyRes.headers['location'] = url.format(u)
     }
+
+    delete proxyRes.headers['transfer-encoding']
   })
+
+  proxy.on('error', function(e) {
+    console.error(e)
+  });
 
   var server = spdy.createServer(options, function(req, res) {
     var done = finalhandler(req, res)
 
-    serve(req, res, options.proxy ? function() {
-      proxy.web(req, res, { target: options.proxy }, done)
-    } : done);
+    var next = function(err) {
+      if (err) {
+        console.error(err)
+      }
+      if (options.proxy && !err) {
+        return proxy.web(req, res, { target: options.proxy })
+      } else {
+        return done(err)
+      }
+    }
+
+    serve(req, res, next);
   });
 
   var chokidar = { app: server, dir: dir, chokidar: options.chokidar }

@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-
 var options = require('commander'),
     path = require('path')
 
@@ -10,7 +9,7 @@ function collect(val, memo) {
 }
 
 options
-  .version('0.3.0')
+  .version('0.3.1')
   .option('-p, --port <n>', 'port to listen on. defaults to 3000', parseInt)
   .option('-d, --dir <folder>', 'directory to serve static files from')
   .option('-c, --cert <pem>', 'path to a PEM certificate. defaults to localhost.crt in current folder')
