@@ -1,6 +1,6 @@
 {
   "name": "jspm-dev-server",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "HTTP/2 server for JSPM development.",
   "main": "index.js",
   "bin": {
@@ -25,12 +25,29 @@
   },
   "homepage": "https://github.com/mikz/jspm-dev-server#readme",
   "dependencies": {
-    "chokidar-socket-emitter": "^0.4.2",
+    "chokidar-socket-emitter": "^0.5.0",
     "finalhandler": "^0.4.1",
     "http-proxy": "^1.13.0",
     "serve-static": "^1.10.2",
     "spdy": "^3.2.0"
   },
   "devDependencies": {
+    "jspm": "^0.17.0-beta.7"
+  },
+  "jspm": {
+    "name": "jspm-dev-server",
+    "dependencies": {
+      "systemjs-hot-reloader": "github:capaj/systemjs-hot-reloader@^0.5.6"
+    },
+    "devDependencies": {
+      "plugin-babel": "npm:systemjs-plugin-babel@^0.0.5"
+    },
+    "peerDependencies": {
+      "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
+      "net": "github:jspm/nodelibs-net@^0.2.0-alpha",
+      "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
+      "tty": "github:jspm/nodelibs-tty@^0.2.0-alpha",
+      "util": "github:jspm/nodelibs-util@^0.2.0-alpha"
+    }
   }
 }

@@ -3,3 +3,4 @@ node_modules
 *.key
 *.crt
 *.pem
+jspm_packages

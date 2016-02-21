@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+  <title>App</title>
+  <script src="jspm_packages/system.js"></script>
+  <script src="jspm.browser.js"></script>
+  <script src="jspm.config.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+System.trace = true
+System.import('systemjs-hot-reloader').then(function(m) { return new m.default('/') })
+</script>
+</body>
+</html>

@@ -8,14 +8,7 @@ var spdy = require('spdy'),
 var dir = process.cwd()
 
 var defaultOptions = {
-  spdy: {
-    protocols: [ 'h2', 'spdy/3.1', 'http/1.1' ],
-    plain: false,
-
-    connection: {
-      windowSize: 1024 * 1024, // Server's window size
-    }
-  }
+  spdy: { }
 }
 
 var serverOptions = function(opts) {
