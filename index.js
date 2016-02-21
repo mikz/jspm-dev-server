@@ -1,6 +1,6 @@
 var spdy = require('spdy'),
   fs = require('fs'),
-  serveStatic = require('serve-static'),
+  send = require('send'),
   finalhandler = require('finalhandler'),
   httpProxy = require('http-proxy'),
   url    = require('url')
@@ -20,21 +20,42 @@ var serverOptions = function(opts) {
   return Object.assign({}, defaultOptions, opts, keys)
 };
 
-
 // Serve up public/ftp folder
 var serveMiddleware = function(options) {
-  return serveStatic(options.dir, {
-    fallthrough: true,
-    'index': ['index.html', 'index.htm'],
-    'setHeaders': function(res, path, stat) {
-      if (path.includes('/jspm_packages/')) {
-        res.setHeader('Cache-Control', 'public, max-age=36000')
-        res.setHeader('Expires',' Thu, 15 Apr 2020 20:00:00 GMT')
-      } else {
-        res.setHeader('Cache-Control', 'public, max-age=0')
-      }
+  var baseURL = options.baseURL
+  var dir = options.dir
+  var serverURL = options.serverURL
+
+  function headers(res, path, stat) {
+    if (path.includes('/jspm_packages/')) {
+      res.setHeader('Cache-Control', 'public, max-age=36000')
+      res.setHeader('Expires',' Thu, 15 Apr 2020 20:00:00 GMT')
+    } else {
+      res.setHeader('Cache-Control', 'public, max-age=0')
     }
-  })
+  }
+
+  return function(req, res, next) {
+    var path = url.parse(req.url).pathname
+
+    if (path.startsWith(baseURL)) {
+      var file = path.substring(baseURL.length)
+
+      send(req, file, { root: serverURL })
+        .on('error', function error(err) {
+          if (err.statusCode >= 500) {
+            next(err)
+          } else {
+            next()
+          }
+        })
+        .on('file', function(path, _stat){
+          console.log(`${req.method} https://${req.headers.host}${req.url} => ${path}`)
+        })
+        .on('headers', headers)
+        .pipe(res);
+    } else { next() }
+  }
 }
 
 var proxy = httpProxy.createProxyServer({protocolRewrite: 'https:', autoRewrite: true});

@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 var options = require('commander'),
-    path = require('path')
+    path = require('path'),
+    jspmConfig = require('jspm/lib/config')
 
 function collect(val, memo) {
   memo.push(val);
@@ -9,7 +10,7 @@ function collect(val, memo) {
 }
 
 options
-  .version('0.3.1')
+  .version('0.4.0')
   .option('-p, --port <n>', 'port to listen on. defaults to 3000', parseInt)
   .option('-d, --dir <folder>', 'directory to serve static files from')
   .option('-c, --cert <pem>', 'path to a PEM certificate. defaults to localhost.crt in current folder')
@@ -21,12 +22,20 @@ options
 options.port = options.port || 3000
 options.cert = path.resolve(options.cert || 'localhost.crt')
 options.key = path.resolve(options.key || 'localhost.key')
-options.dir = path.resolve(options.dir || process.cwd())
+options.pjson = path.resolve(options.dir || process.cwd(), 'package.json')
 options.chokidar = { ignored: options.ignore }
 
+process.env.jspmConfigPath = options.pjson
+jspmConfig.loadSync()
+
+options.baseURL = jspmConfig.loaderBrowser.baseURL
+options.dir = jspmConfig.pjson.dir
+options.serverURL = jspmConfig.pjson.baseURL
+
 try {
+
   var server = require('..')(options)
-  console.log(`[jspm-dev-server] serving ${options.dir} on https://localhost:${options.port}`)
+  console.log(`[jspm-dev-server] serving ${options.serverURL} on https://localhost:${options.port}${options.baseURL}`)
   server.listen(options.port)
 } catch(error) {
   if (error.code === 'ENOENT') {

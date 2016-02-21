@@ -1,6 +1,6 @@
 {
   "name": "jspm-dev-server",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "HTTP/2 server for JSPM development.",
   "main": "index.js",
   "bin": {
@@ -29,7 +29,8 @@
     "finalhandler": "^0.4.1",
     "http-proxy": "^1.13.0",
     "serve-static": "^1.10.2",
-    "spdy": "^3.2.0"
+    "spdy": "^3.2.0",
+    "jspm": "^0.17.0-beta.7"
   },
   "devDependencies": {
     "jspm": "^0.17.0-beta.7"
