@@ -2,7 +2,8 @@
 
 var options = require('commander'),
     path = require('path'),
-    jspmConfig = require('jspm/lib/config')
+    jspmConfig = require('jspm/lib/config'),
+    pjson = require('../package.json')
 
 function collect(val, memo) {
   memo.push(val);
@@ -10,7 +11,7 @@ function collect(val, memo) {
 }
 
 options
-  .version('0.4.0')
+  .version(pjson.version)
   .option('-p, --port <n>', 'port to listen on. defaults to 3000', parseInt)
   .option('-d, --dir <folder>', 'directory to serve static files from')
   .option('-c, --cert <pem>', 'path to a PEM certificate. defaults to localhost.crt in current folder')
