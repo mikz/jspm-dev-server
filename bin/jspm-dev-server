@@ -28,7 +28,7 @@ options.chokidar = { ignored: options.ignore }
 process.env.jspmConfigPath = options.pjson
 jspmConfig.loadSync()
 
-options.baseURL = jspmConfig.loaderBrowser.baseURL
+options.baseURL = jspmConfig.loader.browserBaseURL
 options.dir = jspmConfig.pjson.dir
 options.serverURL = jspmConfig.pjson.baseURL
 

@@ -21,6 +21,7 @@ var serverOptions = function(opts) {
 };
 
 // Serve up public/ftp folder
+var root = '/'
 var serveMiddleware = function(options) {
   var baseURL = options.baseURL
   var dir = options.dir
@@ -40,6 +41,10 @@ var serveMiddleware = function(options) {
 
     if (path.startsWith(baseURL)) {
       var file = path.substring(baseURL.length)
+      // prefix the path with /
+      if (!file.startsWith(root)) {
+        file = root.concat(file)
+      }
 
       send(req, file, { root: serverURL })
         .on('error', function error(err) {
