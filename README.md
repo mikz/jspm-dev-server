@@ -14,6 +14,13 @@ jspm-dev-server
 
 Then just open `https://localhost:3000` and you'll see your app running. 
 
+### Note for Windows git bash users
+
+The openssl command above has to be modified to work on git bash on Windows. Please use this command instead:
+
+`openssl req -x509 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -days 30 -nodes -subj '//CN=localhost'`
+
+Notice the double slash in the -subj parameter. For more info see [this stack overflow answer](http://stackoverflow.com/a/31990313/2761797).
 
 ### Options
 
